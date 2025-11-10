@@ -1,0 +1,7 @@
+data_lv: /dev/vgDATA/lv_data
+data_mount: /data
+test_user: test
+test_uid: 1000
+
+docker_daemon_opts:
+  storage-driver: "overlay2"

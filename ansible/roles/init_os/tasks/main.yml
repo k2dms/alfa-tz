@@ -1,0 +1,36 @@
+- name: Ensure /data directory exists
+  file:
+    path: "{{ data_mount }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Ensure data PV/LV is mounted (fstab)
+  mount:
+    path: "{{ data_mount }}"
+    src: "{{ data_lv }}"
+    fstype: ext4
+    opts: defaults
+    state: mounted
+
+- name: Ensure user 'test' exists with specific UID
+  user:
+    name: "{{ test_user }}"
+    uid: "{{ test_uid }}"
+    comment: "Test user"
+    shell: /bin/bash
+    create_home: yes
+    state: present
+
+- name: Create sudoers file for useradd permission
+  copy:
+    dest: /etc/sudoers.d/90_test_useradd
+    content: "{{ test_user }} ALL=(root) NOPASSWD: /usr/sbin/useradd\n"
+    mode: '0440'
+
+- name: Update all packages (dnf)
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: yes

@@ -1,0 +1,47 @@
+- name: Install prerequisites
+  dnf:
+    name:
+      - dnf-plugins-core
+    state: present
+
+- name: Add Docker repo
+  get_url:
+    url: https://download.docker.com/linux/rhel/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0644'
+
+- name: Install docker packages
+  dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+    update_cache: yes
+
+- name: Ensure /etc/docker exists
+  file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+- name: Configure daemon.json with overlay2
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: '0644'
+
+- name: Enable and start docker
+  systemd:
+    name: docker
+    enabled: yes
+    state: started
+
+- name: Ensure current user 'test' is in docker group (optional)
+  user:
+    name: "{{ test_user }}"
+    groups: docker
+    append: yes
+  when: "'{{ test_user }}' != 'root'"

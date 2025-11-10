@@ -1,0 +1,7 @@
+- hosts: target
+  become: true
+  roles:
+    - init_os
+    - docker_install
+    - resize_lv
+
