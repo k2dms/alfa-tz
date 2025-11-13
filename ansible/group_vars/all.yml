@@ -1,5 +1,3 @@
-data_lv: /dev/vgDATA/lv_data
-data_mount: /data
 test_user: test
 test_uid: 1000
 
