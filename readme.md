@@ -9,7 +9,3 @@ Kickstart-файл для автоматической установки **Cent
 
 **`alfa-tz/ansible/main.yml`**  
 Главный плейбук — запускает роли `init_os` и `docker_install` на хостах группы `target`.
-
-**`alfa-tz/ansible/hosts.ini`**  
-Инвентори-файл.  
-Содержит хост `192.168.15.237` с доступом по SSH-ключу и привилегиями `root`.
