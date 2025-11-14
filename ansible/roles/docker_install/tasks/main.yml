@@ -39,9 +39,10 @@
     enabled: yes
     state: started
 
-- name: Ensure current user 'test' is in docker group (optional)
+- name: Ensure current user 'test' is in docker group
   user:
     name: "{{ test_user }}"
     groups: docker
     append: yes
   when: "'{{ test_user }}' != 'root'"
+
