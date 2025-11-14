@@ -44,5 +44,4 @@
     name: "{{ test_user }}"
     groups: docker
     append: yes
-  when: "'{{ test_user }}' != 'root'"
-
+  when: test_user != "root"
