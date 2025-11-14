@@ -1,4 +1,4 @@
-- name: Ensure user 'test' exists with specific UID
+- name: Ensure user '{{ test_user }}' exists with specific UID
   user:
     name: "{{ test_user }}"
     uid: "{{ test_uid }}"
@@ -26,3 +26,4 @@
     name: "*"
     state: latest
     update_cache: yes
+
